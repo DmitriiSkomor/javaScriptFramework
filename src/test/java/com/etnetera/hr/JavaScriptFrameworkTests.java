@@ -66,14 +66,14 @@ public class JavaScriptFrameworkTests {
 	@Test
 	public void addFrameworkInvalid() throws JsonProcessingException, Exception {
 		JavaScriptFramework framework = new JavaScriptFramework();
-		mockMvc.perform(post("/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(framework)))
+		mockMvc.perform(post("/frameworks/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(framework)))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.errors", hasSize(1)))
 				.andExpect(jsonPath("$.errors[0].field", is("name")))
 				.andExpect(jsonPath("$.errors[0].message", is("NotEmpty")));
 		
 		framework.setName("verylongnameofthejavascriptframeworkjavaisthebest");
-		mockMvc.perform(post("/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(framework)))
+		mockMvc.perform(post("/frameworks/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(framework)))
 			.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.errors", hasSize(1)))
 			.andExpect(jsonPath("$.errors[0].field", is("name")))

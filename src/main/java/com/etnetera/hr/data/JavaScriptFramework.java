@@ -25,7 +25,7 @@ public class JavaScriptFramework implements Serializable {
 	}
 
 
-	@Column(nullable=false, length = 30, name="version")
+	@Column(length = 30, name="version")
 	private String version;
 
 	@Column(nullable=false, length = 30, name="name")
@@ -40,7 +40,7 @@ public class JavaScriptFramework implements Serializable {
 
 
 	public JavaScriptFramework() {
-		name = "defoultName";
+		name = "defaultName";
 		version = "defaultVersion";
 	}
 
