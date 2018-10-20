@@ -34,7 +34,7 @@ public class JavaScriptFrameworkController extends EtnRestController {
 		return repository.save(javaScriptFramework);
 	}
 
-	@PutMapping("/frameworks/{id}")
+	@PutMapping("/frameworks/put/{id}")
 	public Optional<JavaScriptFramework> update(@PathVariable String id, @RequestBody JavaScriptFramework javaScriptFramework) {
 		Optional<JavaScriptFramework> javaScriptFrameworkFromDb = repository.findById(Long.parseLong(id));
 		javaScriptFrameworkFromDb.ifPresent(f -> {
@@ -51,7 +51,7 @@ public class JavaScriptFrameworkController extends EtnRestController {
 		return javaScriptFrameworkFromDb;
 	}
 
-	@DeleteMapping("/frameworks/{id}")
+	@DeleteMapping("/frameworks/delete/{id}")
 	public void delete(@PathVariable String id) {
 		repository.deleteById(Long.parseLong(id));
 	}

@@ -2,8 +2,7 @@ package com.etnetera.hr;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,12 +62,29 @@ public class JavaScriptFrameworkTests {
 				.andExpect(jsonPath("$[1].name", is("Vue.js")));
 
 		JavaScriptFramework reactS = new JavaScriptFramework("ReactJSS");
+		reactS.setHypeLevel(111111);
 
 		mockMvc.perform(post("/frameworks/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(reactS)));
 
 		mockMvc.perform(get("/frameworks/3")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("id", is(3)))
 				.andExpect(jsonPath("name", is("ReactJSS")));
+
+		JavaScriptFramework updatedFrameWork = new JavaScriptFramework("UPDATED");
+
+		mockMvc.perform(put("/frameworks/put/3").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(updatedFrameWork)));
+
+		mockMvc.perform(get("/frameworks/3")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("id", is(3)))
+				.andExpect(jsonPath("name", is("UPDATED")));
+
+		mockMvc.perform(get("/frameworks")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(3)));
+
+		mockMvc.perform(delete("/frameworks/delete/3").contentType(MediaType.APPLICATION_JSON));
+
+		mockMvc.perform(get("/frameworks")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", hasSize(2)));
 
 	}
 	
