@@ -29,12 +29,12 @@ public class JavaScriptFrameworkController extends EtnRestController {
 		return repository.findAll();
 	}
 
-	@PostMapping
+	@PostMapping("/frameworks/add")
 	public JavaScriptFramework add(@RequestBody JavaScriptFramework javaScriptFramework) {
 		return repository.save(javaScriptFramework);
 	}
 
-	@PutMapping("{id}")
+	@PutMapping("/frameworks/{id}")
 	public Optional<JavaScriptFramework> update(@PathVariable String id, @RequestBody JavaScriptFramework javaScriptFramework) {
 		Optional<JavaScriptFramework> javaScriptFrameworkFromDb = repository.findById(Long.parseLong(id));
 		javaScriptFrameworkFromDb.ifPresent(f -> {
@@ -51,12 +51,12 @@ public class JavaScriptFrameworkController extends EtnRestController {
 		return javaScriptFrameworkFromDb;
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping("/frameworks/{id}")
 	public void delete(@PathVariable String id) {
 		repository.deleteById(Long.parseLong(id));
 	}
 
-	@GetMapping("{id}")
+	@GetMapping("/frameworks/{id}")
 	public Optional<JavaScriptFramework> getOne(@PathVariable String id) {
 		return repository.findById(Long.parseLong(id));
 	}
