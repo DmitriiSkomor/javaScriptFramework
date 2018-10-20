@@ -61,6 +61,15 @@ public class JavaScriptFrameworkTests {
 				.andExpect(jsonPath("$[0].name", is("ReactJS")))
 				.andExpect(jsonPath("$[1].id", is(2)))
 				.andExpect(jsonPath("$[1].name", is("Vue.js")));
+
+		JavaScriptFramework reactS = new JavaScriptFramework("ReactJSS");
+
+		mockMvc.perform(post("/frameworks/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(reactS)));
+
+		mockMvc.perform(get("/frameworks/3")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("id", is(3)))
+				.andExpect(jsonPath("name", is("ReactJSS")));
+
 	}
 	
 	@Test
@@ -80,5 +89,6 @@ public class JavaScriptFrameworkTests {
 			.andExpect(jsonPath("$.errors[0].message", is("Size")));
 		
 	}
+
 	
 }
